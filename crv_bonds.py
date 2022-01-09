@@ -91,9 +91,12 @@ def get_discounts():
 
         tokenDeposit = 1e9 * principalPrice/btrflyPrice
         
-        depositValue = treasury_value(treasury_address='0x086C98855dF3C78C6b481b6e1D47BeF42E9aC36B', token_address='0xD533a949740bb3306d119CC777fa900bA034cd52')
-        payout = bond_discount(bond_address='0x765C7CFED02f2d9583EAc8229930f3650AF42C77', depositValue=depositValue)
-        return ((payout / tokenDeposit) - 1)
+        try:
+            depositValue = treasury_value(treasury_address='0x086C98855dF3C78C6b481b6e1D47BeF42E9aC36B', token_address='0xD533a949740bb3306d119CC777fa900bA034cd52')
+            payout = bond_discount(bond_address='0x765C7CFED02f2d9583EAc8229930f3650AF42C77', depositValue=depositValue)
+            return ((payout / tokenDeposit) - 1)
+        except Exception as e:
+            print(e)
 
 
 @client.event

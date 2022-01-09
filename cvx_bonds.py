@@ -87,14 +87,19 @@ def get_discounts():
         try:
             ohmPrice = get_price(lp_address='0x055475920a8c93CfFb64d039A8205F7AcC7722d3')
             btrflyPrice = get_price(lp_address='0xe9AB8038Ee6Dd4fCC7612997FE28d4e22019C4B4', basePrice=ohmPrice)
+
         except:
             btrflyPrice = cg.get_price(ids='butterflydao', vs_currencies='usd')['butterflydao']['usd']
 
         tokenDeposit = 1e9 * principalPrice/btrflyPrice
         
-        depositValue = treasury_value(treasury_address='0x086C98855dF3C78C6b481b6e1D47BeF42E9aC36B', token_address='0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B')
-        payout = bond_discount(bond_address='0xe2eF3B60B0B3087cf1d1179D899a7cD7a11a9fCa', depositValue=depositValue)
-        return ((payout / tokenDeposit) - 1)
+        try:
+            depositValue = treasury_value(treasury_address='0x086C98855dF3C78C6b481b6e1D47BeF42E9aC36B', token_address='0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B')
+            payout = bond_discount(bond_address='0xe2eF3B60B0B3087cf1d1179D899a7cD7a11a9fCa', depositValue=depositValue)
+            return ((payout / tokenDeposit) - 1)
+
+        except Exception as e:
+            print(e)
 
 
 @client.event
